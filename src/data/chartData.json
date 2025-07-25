@@ -1,0 +1,6 @@
+[
+  { "label": "A", "value": 90, "cost": 75},
+  { "label": "B", "value": 5, "cost": 17},
+  { "label": "C", "value": 3, "cost": 5},
+  { "label": "D", "value": 2, "cost": 3}
+]
