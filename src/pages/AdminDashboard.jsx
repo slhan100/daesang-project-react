@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
+import React from 'react'
 import UserSection from '../components/UserSection'
 import UsageSection from '../components/UsageSection'
 import LogSection from '../components/LogSection'
 import PeriodLineChart from '../components/PeriodLineChart'
 
 function AdminDashboard() {
-  const [selected, setSelected] = useState('user')
-
-  let content
-  if (selected === 'user') content = <UserSection />
-  else if (selected === 'usage') content = (
-    <>
-      <UsageSection />
-      <PeriodLineChart /> {/* 같이 렌더링 */}
-    </>
-  ) 
-  else if (selected === 'log') content = <LogSection />
-
   return (
-    <div>
-      <Header />
-      <div style={{ display: 'flex' }}>
-        <Sidebar selected={selected} onSelect={setSelected} />
-        <main style={{ flex: 1, padding: '32px' }}>
-          {content}
-        </main>
+    <div className="admin-dashboard">
+      <div className="dashboard-content">
+        <div className="dashboard-sections">
+          
+          
+          <div className="section">
+            <h2>사용량 통계</h2>
+            <UsageSection />
+            {/* <PeriodLineChart /> */}
+          </div>
+
+          <div className="section">
+            <h2>사용자 관리</h2>
+            <UserSection />
+          </div>
+          
+          <div className="section">
+            <h2>로그 관리</h2>
+            <LogSection />
+          </div>
+        </div>
       </div>
     </div>
   )

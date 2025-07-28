@@ -1,58 +1,29 @@
-import React, { useEffect, useRef } from 'react'
-import ApexCharts from 'apexcharts'
-import periodChartData from '../data/periodChartData.json'
+import React, { useState } from 'react'
+import UserSection from '../components/UserSection'
+import UsageSection from '../components/UsageSection'
+import LogSection from '../components/LogSection'
+import PeriodLineChart from '../components/PeriodLineChart'
 
-function PeriodLineChart() {
-  const chartRefToken = useRef(null)
-  const chartRefPrice = useRef(null)
+function AdminDashboard() {
+  const [selected, setSelected] = useState('user')
 
-  useEffect(() => {
-    const categories = periodChartData.map(item => item.date)
-
-    // 토큰 사용량 차트
-    const seriesToken = [{
-      name: '토큰 사용량',
-      data: periodChartData.map(item => item.value)
-    }]
-    const optionsToken = {
-      chart: { type: 'line', height: 300 },
-      colors: ['#fb3200ff'], 
-      xaxis: { categories, title: { text: '날짜' } },
-      yaxis: { title: { text: '토큰 사용량' } },
-      stroke: { curve: 'straight' },
-      markers: { size: 4 }
-    }
-    const chartToken = new ApexCharts(chartRefToken.current, { ...optionsToken, series: seriesToken })
-    chartToken.render()
-
-    // Price 차트
-    const seriesPrice = [{
-      name: 'Price',
-      data: periodChartData.map(item => item.price)
-    }]
-    const optionsPrice = {
-      chart: { type: 'line', height: 300 },
-      colors: ['#1035eeff'], 
-      xaxis: { categories, title: { text: '날짜' } },
-      yaxis: { title: { text: 'Price' } },
-      stroke: { curve: 'straight' },
-      markers: { size: 4 }
-    }
-    const chartPrice = new ApexCharts(chartRefPrice.current, { ...optionsPrice, series: seriesPrice })
-    chartPrice.render()
-
-    return () => {
-      chartToken.destroy()
-      chartPrice.destroy()
-    }
-  }, [])
+  let content
+  if (selected === 'user') content = <UserSection />
+  else if (selected === 'usage') content = (
+    <>
+      <UsageSection />
+      <PeriodLineChart /> {/* 같이 렌더링 */}
+    </>
+  ) 
+  else if (selected === 'log') content = <LogSection />
 
   return (
-    <div style={{ display: 'flex', gap: '24px' }}>
-      <div ref={chartRefToken} style={{ width: 450, height: 300 }} />
-      <div ref={chartRefPrice} style={{ width: 450, height: 300 }} />
+    <div className="admin-dashboard">
+      <div className="dashboard-content">
+        {content}
+      </div>
     </div>
   )
 }
 
-export default PeriodLineChart
+export default AdminDashboard

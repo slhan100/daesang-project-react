@@ -36,7 +36,7 @@ function UsageSection() {
   }, [])
 
   return(
-  <div>
+  <div style={{ color: 'black' }}>
     <h3>사용량 영역</h3>
       <div style={{ display: 'flex', gap: '24px' }}>
         법인 : 
